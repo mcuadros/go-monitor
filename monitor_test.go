@@ -10,8 +10,6 @@ import (
 func TestNewMonitor(t *testing.T) {
 	m := NewMonitor(":9000")
 	assert.Len(t, m.Aspects, 2)
-
-	m.Start()
 }
 
 func TestMonitor_getAspectsResults(t *testing.T) {
@@ -19,5 +17,5 @@ func TestMonitor_getAspectsResults(t *testing.T) {
 	r := m.getAspectsResults()
 
 	assert.Len(t, r, 2)
-	assert.NotNil(t, r["mem_stats"].(*runtime.MemStats).Alloc)
+	assert.NotNil(t, r["MemStats"].(*runtime.MemStats).Alloc)
 }

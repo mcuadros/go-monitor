@@ -14,7 +14,9 @@ type RuntimeAspectData struct {
 	CgoCallNum   int64
 }
 
-type RuntimeAspect struct{}
+type RuntimeAspect struct {
+	ShowInRoot bool
+}
 
 func (a *RuntimeAspect) Get() interface{} {
 	return &RuntimeAspectData{
@@ -30,4 +32,8 @@ func (a *RuntimeAspect) Get() interface{} {
 
 func (a *RuntimeAspect) Name() string {
 	return "Runtime"
+}
+
+func (a *RuntimeAspect) InRoot() bool {
+	return a.ShowInRoot
 }

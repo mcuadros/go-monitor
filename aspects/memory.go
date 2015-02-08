@@ -8,7 +8,9 @@ type Foo struct {
 	runtime.MemStats
 }
 
-type MemoryAspect struct{}
+type MemoryAspect struct {
+	ShowInRoot bool
+}
 
 func (a *MemoryAspect) Get() interface{} {
 	var mem runtime.MemStats
@@ -19,4 +21,8 @@ func (a *MemoryAspect) Get() interface{} {
 
 func (a *MemoryAspect) Name() string {
 	return "MemStats"
+}
+
+func (a *MemoryAspect) InRoot() bool {
+	return a.ShowInRoot
 }

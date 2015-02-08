@@ -24,8 +24,8 @@ func NewMonitor(addr string) *Monitor {
 		Aspects: make(map[string]aspects.Aspect, 0),
 	}
 
-	m.AddAspect(&aspects.RuntimeAspect{})
-	m.AddAspect(&aspects.MemoryAspect{})
+	m.AddAspect(&aspects.RuntimeAspect{true})
+	m.AddAspect(&aspects.MemoryAspect{true})
 
 	return m
 }
@@ -64,7 +64,7 @@ func (m *Monitor) aspectHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Monitor) jsonHandle(data interface{}, w http.ResponseWriter, r *http.Request) {
-	json, err := json.MarshalIndent(data, "  ", "  ")
+	json, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -80,7 +80,9 @@ func (m *Monitor) getAspectsResults() map[string]interface{} {
 
 	r := make(map[string]interface{}, 0)
 	for k, a := range m.Aspects {
-		r[k] = a.Get()
+		if a.InRoot() {
+			r[k] = a.Get()
+		}
 	}
 
 	return r
