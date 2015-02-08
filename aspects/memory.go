@@ -4,15 +4,11 @@ import (
 	"runtime"
 )
 
-type Foo struct {
-	runtime.MemStats
-}
-
 type MemoryAspect struct {
 	ShowInRoot bool
 }
 
-func (a *MemoryAspect) Get() interface{} {
+func (a *MemoryAspect) GetStats() interface{} {
 	var mem runtime.MemStats
 	runtime.ReadMemStats(&mem)
 

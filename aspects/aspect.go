@@ -1,7 +1,7 @@
 package aspects
 
 type Aspect interface {
-	Get() interface{}
+	GetStats() interface{}
 	Name() string
 	InRoot() bool
 }

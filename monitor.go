@@ -59,7 +59,7 @@ func (m *Monitor) rootHandler(w http.ResponseWriter, r *http.Request) {
 func (m *Monitor) aspectHandler(w http.ResponseWriter, r *http.Request) {
 	name := r.URL.Path[1:]
 	if a, ok := m.Aspects[name]; ok {
-		m.jsonHandle(a.Get(), w, r)
+		m.jsonHandle(a.GetStats(), w, r)
 	}
 }
 
@@ -81,7 +81,7 @@ func (m *Monitor) getAspectsResults() map[string]interface{} {
 	r := make(map[string]interface{}, 0)
 	for k, a := range m.Aspects {
 		if a.InRoot() {
-			r[k] = a.Get()
+			r[k] = a.GetStats()
 		}
 	}
 

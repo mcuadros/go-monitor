@@ -18,7 +18,7 @@ type RuntimeAspect struct {
 	ShowInRoot bool
 }
 
-func (a *RuntimeAspect) Get() interface{} {
+func (a *RuntimeAspect) GetStats() interface{} {
 	return &RuntimeAspectData{
 		GoVersion:    runtime.Version(),
 		GoOs:         runtime.GOOS,
