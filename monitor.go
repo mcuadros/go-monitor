@@ -20,16 +20,19 @@ type Monitor struct {
 }
 
 func NewMonitor(addr string) *Monitor {
-	m := &Monitor{
+	m := NewPlainMonitor(addr)
+	m.AddAspect(aspects.NewTimeAspect(true))
+	m.AddAspect(aspects.NewRuntimeAspect(true))
+	m.AddAspect(aspects.NewMemoryAspect(true))
+
+	return m
+}
+
+func NewPlainMonitor(addr string) *Monitor {
+	return &Monitor{
 		Addr:    addr,
 		Aspects: make(map[string]aspects.Aspect, 0),
 	}
-
-	m.AddAspect(&aspects.RuntimeAspect{true})
-	m.AddAspect(&aspects.MemoryAspect{true})
-	m.AddAspect(aspects.NewTimeAspect(true))
-
-	return m
 }
 
 func (m *Monitor) AddAspect(a aspects.Aspect) {

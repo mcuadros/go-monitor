@@ -8,6 +8,10 @@ type MemoryAspect struct {
 	ShowInRoot bool
 }
 
+func NewMemoryAspect(inRoot bool) *MemoryAspect {
+	return &MemoryAspect{ShowInRoot: inRoot}
+}
+
 func (a *MemoryAspect) GetStats() interface{} {
 	var mem runtime.MemStats
 	runtime.ReadMemStats(&mem)

@@ -18,6 +18,10 @@ type RuntimeAspect struct {
 	ShowInRoot bool
 }
 
+func NewRuntimeAspect(inRoot bool) *RuntimeAspect {
+	return &RuntimeAspect{ShowInRoot: inRoot}
+}
+
 func (a *RuntimeAspect) GetStats() interface{} {
 	return &RuntimeAspectData{
 		GoVersion:    runtime.Version(),
