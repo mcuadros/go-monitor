@@ -3,6 +3,7 @@ package monitor
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 	"sync"
 
 	"github.com/mcuadros/go-monitor/aspects"
@@ -44,6 +45,9 @@ func (m *Monitor) buildServer() {
 }
 
 func (m *Monitor) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	m.Lock()
+	defer m.Unlock()
+
 	if r.URL.Path == "/" {
 		m.rootHandler(w, r)
 		return
@@ -53,14 +57,11 @@ func (m *Monitor) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Monitor) rootHandler(w http.ResponseWriter, r *http.Request) {
-	m.jsonHandle(m.getAspectsResults(), w, r)
+	m.jsonHandle(m.getAllAspectsResults(), w, r)
 }
 
 func (m *Monitor) aspectHandler(w http.ResponseWriter, r *http.Request) {
-	name := r.URL.Path[1:]
-	if a, ok := m.Aspects[name]; ok {
-		m.jsonHandle(a.GetStats(), w, r)
-	}
+	m.jsonHandle(m.getAspectsResults(r.URL.Path[1:]), w, r)
 }
 
 func (m *Monitor) jsonHandle(data interface{}, w http.ResponseWriter, r *http.Request) {
@@ -74,16 +75,24 @@ func (m *Monitor) jsonHandle(data interface{}, w http.ResponseWriter, r *http.Re
 	w.Write(json)
 }
 
-func (m *Monitor) getAspectsResults() map[string]interface{} {
-	m.Lock()
-	defer m.Unlock()
-
-	r := make(map[string]interface{}, 0)
+func (m *Monitor) getAllAspectsResults() map[string]interface{} {
+	res := make(map[string]interface{}, 0)
 	for k, a := range m.Aspects {
 		if a.InRoot() {
-			r[k] = a.GetStats()
+			res[k] = a.GetStats()
 		}
 	}
 
-	return r
+	return res
+}
+
+func (m *Monitor) getAspectsResults(aspects string) map[string]interface{} {
+	res := make(map[string]interface{}, 0)
+	for _, name := range strings.Split(aspects, ",") {
+		if a, ok := m.Aspects[name]; ok {
+			res[name] = a.GetStats()
+		}
+	}
+
+	return res
 }
