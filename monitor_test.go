@@ -9,7 +9,7 @@ import (
 
 func TestNewMonitor(t *testing.T) {
 	m := NewMonitor(":9000")
-	assert.Len(t, m.Aspects, 2)
+	assert.Len(t, m.Aspects, 3)
 }
 
 func TestMonitor_getAllAspectsResults(t *testing.T) {

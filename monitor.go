@@ -27,6 +27,7 @@ func NewMonitor(addr string) *Monitor {
 
 	m.AddAspect(&aspects.RuntimeAspect{true})
 	m.AddAspect(&aspects.MemoryAspect{true})
+	m.AddAspect(aspects.NewTimeAspect(true))
 
 	return m
 }
