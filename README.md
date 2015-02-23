@@ -1,7 +1,9 @@
-go-monitor [![Build Status](https://travis-ci.org/mcuadros/go-monitor.png?branch=master)](https://travis-ci.org/mcuadros/go-monitor) [![GoDoc](http://godoc.org/github.com/mcuadros/go-monitor?status.png)](http://godoc.org/github.com/mcuadros/go-monitor)
+go-monitor [![Build Status](https://travis-ci.org/mcuadros/go-monitor.png?branch=master)](https://travis-ci.org/mcuadros/go-monitor) [![GoDoc](http://godoc.org/github.com/mcuadros/go-monitor?status.png)](http://godoc.org/github.com/mcuadros/go-monitor) [![GitHub release](https://img.shields.io/github/release/mcuadros/go-monitor.svg)](https://github.com/mcuadros/go-monitor/releases)
 ==============================
 
-go-monitor builds easy and extensible monitorization (runtime, memory, etc) via HTTP for Go processes and daemons.
+The main goal of `go-monitor` is provide a simple and extensible way to build monitorizable long term execution processes or daemons via HTTP.
+
+Thanks to the defaults `aspects` you can monitorize parameters as runtime, memory, etc. for any Go processes and daemons. As well you can create your custom `aspects` for monitorize custom parameters from your applications.
 
 
 Installation
@@ -16,6 +18,8 @@ go get github.com/mcuadros/go-monitor
 Examples
 --------
 
+## Default Monitor
+
 Import the package:
 
 ```go
@@ -26,7 +30,7 @@ Start the monitor just before of the bootstrap of your code:
 
 ```go
 m := monitor.NewMonitor(":9000")
-go m.Start()
+m.Start()
 ```
 
 Now just try `curl http://localhost:9000/`
@@ -52,6 +56,45 @@ Now just try `curl http://localhost:9000/`
 ```
 
 At the `/` you can find all the aspects that are loaded by default, you can request other aspects through the URL `/<aspect-name>,<aspect-name>`
+
+## Custom Monitor
+
+Define your custom aspect, in this case just a simple one that count the number of hits on it.
+
+```go
+type CustomAspect struct {
+  Count int
+}
+
+func (a *CustomAspect) GetStats() interface{} {
+  a.Count++
+  return a.Count
+}
+
+func (a *CustomAspect) Name() string {
+  return "Custom"
+}
+
+func (a *CustomAspect) InRoot() bool {
+  return false
+}
+```
+
+Now just add the `CustomAspect` to the monitor and run it.
+
+```go
+m := monitor.NewMonitor(":9000")
+m.AddAspect(&CustomAspect{})
+m.Start()
+```
+
+Hit `http://localhost:9000/Custom` and obtain:
+```
+{
+  "Custom": 5
+}
+```
+
 
 License
 -------
