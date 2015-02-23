@@ -1,6 +1,6 @@
 package main
 
-import "github.com/mcuadros/go-monitor"
+import "gopkg.in/mcuadros/go-monitor.v1"
 
 func main() {
 	m := monitor.NewMonitor(":9000")

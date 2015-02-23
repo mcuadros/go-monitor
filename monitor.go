@@ -6,7 +6,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/mcuadros/go-monitor/aspects"
+	"gopkg.in/mcuadros/go-monitor.v1/aspects"
 )
 
 type Monitor struct {

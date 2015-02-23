@@ -1,4 +1,4 @@
-go-monitor [![Build Status](https://travis-ci.org/mcuadros/go-monitor.png?branch=master)](https://travis-ci.org/mcuadros/go-monitor) [![GoDoc](http://godoc.org/github.com/mcuadros/go-monitor?status.png)](http://godoc.org/github.com/mcuadros/go-monitor) [![GitHub release](https://img.shields.io/github/release/mcuadros/go-monitor.svg)](https://github.com/mcuadros/go-monitor/releases)
+go-monitor [![Build Status](https://travis-ci.org/mcuadros/go-monitor.png?branch=master)](https://travis-ci.org/mcuadros/go-monitor) [![GoDoc](http://godoc.org/gopkg.in/mcuadros/go-monitor.v1?status.png)](http://godoc.org/gopkg.in/mcuadros/go-monitor.v1) [![GitHub release](https://img.shields.io/github/release/mcuadros/go-monitor.svg)](https://github.com/mcuadros/go-monitor/releases)
 ==============================
 
 The main goal of `go-monitor` is provide a simple and extensible way to build monitorizable long term execution processes or daemons via HTTP.
@@ -12,7 +12,7 @@ Installation
 The recommended way to install go-monitor
 
 ```
-go get github.com/mcuadros/go-monitor
+go get gopkg.in/mcuadros/go-monitor.v1
 ```
 
 Examples
@@ -23,7 +23,7 @@ Examples
 Import the package:
 
 ```go
-import "github.com/mcuadros/go-monitor"
+import "gopkg.in/mcuadros/go-monitor.v1"
 ```
 
 Start the monitor just before of the bootstrap of your code:
