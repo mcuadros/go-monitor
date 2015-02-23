@@ -8,6 +8,7 @@ type MemoryAspect struct {
 	ShowInRoot bool
 }
 
+//NewMemoryAspect returns the value of `runtime.ReadMemStats`
 func NewMemoryAspect(inRoot bool) *MemoryAspect {
 	return &MemoryAspect{ShowInRoot: inRoot}
 }

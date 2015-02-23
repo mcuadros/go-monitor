@@ -18,6 +18,7 @@ type RuntimeAspect struct {
 	ShowInRoot bool
 }
 
+//NewRuntimeAspect returns several values from the runtome
 func NewRuntimeAspect(inRoot bool) *RuntimeAspect {
 	return &RuntimeAspect{ShowInRoot: inRoot}
 }

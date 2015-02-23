@@ -14,6 +14,7 @@ type TimeAspect struct {
 	ShowInRoot bool
 }
 
+//NewTimeAspect returns the current time and the running time
 func NewTimeAspect(inRoot bool) *TimeAspect {
 	return &TimeAspect{StartTime: time.Now(), ShowInRoot: inRoot}
 }

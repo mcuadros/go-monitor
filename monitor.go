@@ -19,6 +19,7 @@ type Monitor struct {
 	sync.Mutex
 }
 
+//NewMonitor returns a new Monitor, with the standard Aspects (time, runtime and memory)
 func NewMonitor(addr string) *Monitor {
 	m := NewPlainMonitor(addr)
 	m.AddAspect(aspects.NewTimeAspect(true))
@@ -28,6 +29,7 @@ func NewMonitor(addr string) *Monitor {
 	return m
 }
 
+//NewPlainMonitor returns a new Monitor, without aspects
 func NewPlainMonitor(addr string) *Monitor {
 	return &Monitor{
 		Addr:    addr,
@@ -35,10 +37,12 @@ func NewPlainMonitor(addr string) *Monitor {
 	}
 }
 
+//AddAspect adds a new `aspects.Aspect` to the Monitor
 func (m *Monitor) AddAspect(a aspects.Aspect) {
 	m.Aspects[a.Name()] = a
 }
 
+//Start launch the HTTP server
 func (m *Monitor) Start() error {
 	m.buildServer()
 	return m.server.ListenAndServe()
