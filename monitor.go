@@ -79,6 +79,7 @@ func (m *Monitor) jsonHandle(data interface{}, w http.ResponseWriter, r *http.Re
 		return
 	}
 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(json)
 }
